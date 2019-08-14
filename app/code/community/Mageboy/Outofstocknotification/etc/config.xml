@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Module configuration
+ *
+ * @author Krishna Ijjada
+ */
+-->
+<config>
+    <modules>
+        <Mageboy_Outofstocknotification>
+            <version>0.1.2</version>
+        </Mageboy_Outofstocknotification>
+    </modules>
+    
+	<global>
+		<blocks>
+			<outofstocknotification>
+				<class>Mageboy_Outofstocknotification_Block</class>
+			</outofstocknotification>
+		</blocks>
+		<helpers>
+			<outofstocknotification>
+				<class>Mageboy_Outofstocknotification_Helper</class>				
+			</outofstocknotification>			
+		</helpers>
+		<models>
+            <outofstocknotification>
+                <class>Mageboy_Outofstocknotification_Model</class> 
+                <resourceModel>outofstocknotification_mysql4</resourceModel>               
+            </outofstocknotification>
+            <outofstocknotification_mysql4>
+                <class>Mageboy_Outofstocknotification_Model_Mysql4</class>
+                <entities>
+					<info>
+						<table>outofstocknotification_info</table>
+					</info>														
+				</entities>                                
+    		</outofstocknotification_mysql4>
+        </models>
+        <resources>
+            <outofstocknotification_setup>
+                <setup>
+                    <module>Mageboy_Outofstocknotification</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </outofstocknotification_setup>
+            <outofstocknotification_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </outofstocknotification_write>
+            <outofstocknotification_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </outofstocknotification_read>            
+        </resources>
+        <events>
+        	<catalog_product_save_after>
+                <observers>
+                    <outofstocknotification_inventory>
+                        <class>outofstocknotification/observer</class>
+                        <method>sendEmailToOutofstocknotification</method>
+                    </outofstocknotification_inventory>
+                </observers>
+            </catalog_product_save_after>
+            <sales_order_item_cancel>
+                <observers>
+                    <outofstocknotification_order_cancel>
+                        <class>outofstocknotification/observer</class>
+                        <method>cancelOrderItem</method>
+                    </outofstocknotification_order_cancel>
+                </observers>
+            </sales_order_item_cancel>
+        </events>
+        <template>
+            <email>
+                <outofstock_subscription translate="label" module="outofstocknotification">
+                    <label>Out of Stock Subscription</label>
+                    <file>outofstock_subscription.html</file>
+                    <type>html</type>
+                </outofstock_subscription>                
+            </email>
+        </template>            
+	</global>
+  	<default>
+    		<outofstocknotification>
+   			<mail>
+        			<successmessage>Request submitted successfully.</successmessage>
+
+   			</mail>
+    		</outofstocknotification>
+  	</default>
+	
+	<frontend>
+		<routers>
+            <outofstocknotification>
+                <use>standard</use>
+                <args>
+                    <module>Mageboy_Outofstocknotification</module>
+                    <frontName>outofstocknotification</frontName>
+                </args>
+            </outofstocknotification>
+        </routers>
+    	<layout>
+			<updates>
+				<outofstocknotification>
+					<file>outofstocknotification.xml</file>
+				</outofstocknotification>
+			</updates>
+		</layout>        
+    </frontend>
+    
+    <admin>
+        <routers>
+            <outofstocknotification>
+                <use>admin</use>
+                <args>
+                    <module>Mageboy_Outofstocknotification</module>
+                    <frontName>outofstocknotification</frontName>
+                </args>
+            </outofstocknotification>
+        </routers>        
+    </admin> 
+    
+    <default>
+    	<outofstocknotification>
+    		<mail>
+    			<active>1</active>
+    		</mail>
+    	</outofstocknotification>
+    </default>	  
+    
+    <adminhtml>
+    	<menu>
+	        <outofstocknotification translate="title" module="outofstocknotification">
+                <title>Subscribers</title>
+                <sort_order>130</sort_order>
+				<action>outofstocknotification/adminhtml_subscriber</action>                
+            </outofstocknotification>
+        </menu>    
+		<acl>
+			<resources>
+	    		<admin translate="title" module="adminhtml">
+		             <children>
+						<outofstocknotification>
+                        	<title>Subscribers</title>                        	                
+                        </outofstocknotification>
+                        <system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <outofstocknotification translate="title">
+	                                        <title>Out of Stock Subscription</title>
+	                                        <sort_order>200</sort_order>
+	                                    </outofstocknotification>
+	                                </children>
+	                            </config>
+	                        </children>
+	                    </system>
+					 </children>
+				</admin>	
+			</resources>	
+		</acl>
+	</adminhtml>	
+        
+</config>

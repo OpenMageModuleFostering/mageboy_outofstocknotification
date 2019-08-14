@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * Out of stock notification template for separate item
+ *
+ * @author Krishna Ijjada
+ * 
+ * Package Mageboy_Outofstocknotification
+ * 
+ */
+?>
+<?php
+    $_helper = $this->helper('catalog/output');
+    $_product = Mage::registry('current_product');
+?>
+<div class="product-view">
+    <div class="notification-essential">
+    <?php $_storeId = Mage::app()->getStore()->getId(); ?>
+    <?php $_isActive = Mage::getStoreConfig('outofstocknotification/mail/active', $_storeId); ?>
+    	<?php $_url = $this->getUrl('outofstocknotification') ?>
+    <form method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+            <input id="action_url" name="action_url" type="hidden" value="<?php echo $_url ?>" >
+        </div>
+        <div class="product-notification">
+        <?php if(!$_product->isSaleable() && $_isActive): ?>
+            <div class="product-options">
+            	<table width="100%">
+            	  <tr>
+            		<td colspan="2" style="padding-bottom:5px;">
+            		<strong><?php echo $this->__('Product Out of Stock Subscription') ?></strong>
+            		</td>
+            	  </tr>            			
+            	  <tr>
+            		<td style="padding-bottom:5px;"><?php echo $this->__('Email : ') ?></td>
+            		<td><input type="text" id="subscription_email" name="subscription_email" value="" style="width:200px;" class="input-text required-entry validate-email" />
+            		</td>
+            	  </tr>
+            	  <tr>
+            		<td>&nbsp;</td>
+            		<td style="font-size:10px;">(<?php echo $this->__("Notify me when this product is back in stock") ?>)
+            		</td>
+            	  </tr>
+            	  <tr>
+            		<td style="">&nbsp;</td>
+            		<td><button onclick="productNotificationForm.submit();" class="button btn-cart" type="button"><span><span><?php echo $this->__('Notify Me') ?></span></span></button>
+ <img style="display:none;" id="loading-image" src="<?php echo $this->getSkinUrl('images/ajax-loader.gif'); ?>" alt="title" />
+
+            		</td>
+
+            	  </tr>
+		  <tr>
+            		<td>&nbsp;</td>
+			<td><idv style="color:red;" id="results"></div></td>
+		  </tr>
+                </table>
+           </div>
+            <?php endif; ?>
+    </div>
+        <div class="clearer"></div>
+  </form> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>$q = jQuery.noConflict(); </script>
+	<script>
+    //<![CDATA[
+        var productNotificationForm = new VarienForm('product_addtocart_form');
+	var action_url = document.getElementById('action_url').value;
+            productNotificationForm.submit = function(){
+                    if (this.validator.validate()) {
+				$q('#loading-image').show();
+    				$q.ajax({
+        			url: action_url,
+        			type: "POST",
+        			data: $q('form').serialize(),
+        			success: function(data) {
+	    			$q('#loading-image').hide();
+	    			$q('#results').html(data);
+
+        			},
+        			error: function() {
+            			alert('Error occured');
+        			}
+
+      			});
+                    }
+            }.bind(productNotificationForm);
+    //]]>
+    </script>
+    </div>
+</div>

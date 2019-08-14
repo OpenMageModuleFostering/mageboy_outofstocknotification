@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Module initial config
+ *
+ * @author Krishna Ijjada
+ */
+-->
+<config>
+    <modules>
+        <Mageboy_Outofstocknotification>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+            	<Mage_Catalog/>
+            	<Mage_CatalogInventory/>
+	    </depends>
+        </Mageboy_Outofstocknotification>
+    </modules>
+</config>
