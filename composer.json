@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Mageboy_Outofstocknotification",
+    "name": "OpenMageModuleFostering\/Mageboy_Outofstocknotification",
     "type": "magento-module",
     "license": "Open-Software-License-(OSL)",
     "homepage": "",
-    "description": "Extension allow customers to enter their Email Id and notifies them once the stock is back to “In Stock” .",
+    "description": "Extension allow customers to enter their Email Id and notifies them once the stock is back to \u201cIn Stock\u201d .",
     "authors": [
-    {
-        "name": "krishna ijjada",
-        "email": "krishnaijjada@outlook.com"
-    }
-],
+        {
+            "name": "krishna ijjada",
+            "email": "krishnaijjada@outlook.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
