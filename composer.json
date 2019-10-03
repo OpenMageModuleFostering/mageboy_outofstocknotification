@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Mageboy_Outofstocknotification",
+    "name": "openmage-module-fostering\/mageboy_outofstocknotification",
     "type": "magento-module",
-    "license": "Open-Software-License-(OSL)",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "Extension allow customers to enter their Email Id and notifies them once the stock is back to \u201cIn Stock\u201d .",
     "authors": [
